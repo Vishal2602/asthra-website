@@ -70,6 +70,19 @@
      time: 1500
     });
 
+    $('#myModal').on('shown.bs.modal', function () {
+      $('#myInput').trigger('focus')
+    })
+
+
+    $('#exampleModal').on('show.bs.modal', function(event) {
+      var button = $(event.relatedTarget)
+      var recipient = button.data('whatever')
+      var modal = $(this)
+      modal.find('.modal-title').text(' ! ' + recipient)
+      modal.find('#textbody').html(recipient)
+    })
+
     /* Back Top Link active
     ========================================================*/
       var offset = 200;
@@ -93,3 +106,34 @@
   });      
 
 }(jQuery));
+
+
+var datamap = new Map([
+  [document.getElementById("myBtn"), document.getElementById("myModal")],
+  [document.getElementById("myBtn1"), document.getElementById("myModal1")],
+  [document.getElementById("myBtn2"), document.getElementById("myModal2")]
+]);
+
+datamap.forEach((value, key) => {
+  doModal(key, value);
+});
+
+function doModal(anchor, popupbox) {
+
+  // Get the <span> element that closes the modal
+  var span = popupbox.getElementsByClassName("close")[0];
+
+  anchor.addEventListener("click", function (event) {
+      popupbox.style.display = "block";
+  });
+
+  span.addEventListener("click", function (event) {
+      popupbox.style.display = "none";
+  });
+
+  window.addEventListener("click", function (event) {
+      if (event.target == popupbox) {
+          popupbox.style.display = "none";
+      }
+  });
+}
